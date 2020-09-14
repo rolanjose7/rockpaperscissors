@@ -7,42 +7,64 @@
 </head>
 <body>	
 	<script>
-		function computerPlay(){
-			let computersPick = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-			if (computersPick == 1){
-				return "Rock";
-			} else if (computersPick == 2){
-				return "Paper";
-			} else {
-				return "Scissors";
+		function game(){
+			let playerWins = 0;
+			let computersWins = 0;
+			for (var i = 1; i < 6; i++) {
+				function computerPlay(){
+					let computersPick = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+					if (computersPick == 1){
+						return "rock";
+					} else if (computersPick == 2){
+						return "paper";
+					} else {
+						return "scissors";
+					}
+				}
+				function playRound(playerSelection, computerSelection){
+					if (playerSelection == "rock" && computerSelection == "rock"){
+						return "It is a Rock tie!";
+					} else if (playerSelection == "rock" && computerSelection == "scissors"){
+						playerWins++;
+						return "You won! Rock against Scissors!";
+					} else if (playerSelection == "rock" && computerSelection == "paper"){
+						computersWins++;
+						return "You lose! Rock against Paper!";
+					} else if (playerSelection == "paper" && computerSelection == "paper"){
+						return "It is a Paper tie!";
+					} else if (playerSelection == "paper" && computerSelection == "rock"){
+						playerWins++;
+						return "You won! Paper against Rock!";
+					} else if (playerSelection == "paper" && computerSelection == "scissors"){
+						computersWins++;
+						return "You lose! Paper against Scissors!";
+					} else if (playerSelection == "scissors" && computerSelection == "scissors"){
+						return "It is a Scissors tie!";
+					} else if (playerSelection == "scissors" && computerSelection == "paper"){
+						playerWins++;
+						return "You won! Scissors against Paper!";
+					} else if (playerSelection == "scissors" && computerSelection == "rock"){
+						computersWins++;
+						return "You lose! Scissors against Rock!";
+					}   
+				}
+				let playerSelection = prompt("Game " + i + ": Rock Paper Scissors!");
+				console.log(playRound(playerSelection.toLowerCase(), computerPlay()));
+				console.log("Score: Player: " + playerWins + ", Computer: " + computersWins);
 			}
+			while (playerWins === computersWins) {
+				computerPlay();
+				let playerSelection = prompt("Rock Paper Scissors!");
+				console.log(playRound(playerSelection.toLowerCase(), computerPlay()));
+				console.log("Score: Player: " + playerWins + ", Computer: " + computersWins);
+			}
+			if (playerWins > computersWins){
+				console.log("Player Wins! " + playerWins + " to " + computersWins);
+			} else {
+				console.log("Computer Wins! " + playerWins + " to " + computersWins);
+			}	
 		}
-		function playRound(playerSelection, computerSelection){
-			if (playerSelection == "Rock" && computerSelection == "Rock"){
-				return "It is a Rock tie!";
-			} else if (playerSelection == "Rock" && computerSelection == "Scissors"){
-				return "You won! Rock against Scissors!";
-			} else if (playerSelection == "Rock" && computerSelection == "Paper"){
-				return "You lose! Rock against Paper!";
-			} else if (playerSelection == "Paper" && computerSelection == "Paper"){
-				return "It is a Paper tie!";
-			} else if (playerSelection == "Paper" && computerSelection == "Rock"){
-				return "You won! Paper against Rock!";
-			} else if (playerSelection == "Paper" && computerSelection == "Scissors"){
-				return "You lose! Paper against Scissors!";
-			} else if (playerSelection == "Scissors" && computerSelection == "Scissors"){
-				return "It is a Scissors tie!";
-			} else if (playerSelection == "Scissors" && computerSelection == "Paper"){
-				return "You won! Scissors against Paper!";
-			} else if (playerSelection == "Scissors" && computerSelection == "Rock"){
-				return "You lose! Scissors against Rock!";
-			}   
-		}
-		let playerSelection = prompt("Rock Paper Scissors?");
-		let computerSelection = computerPlay();
-		console.log(playerSelection);
-		console.log(computerSelection);
-		console.log(playRound(playerSelection, computerSelection));
+		game();
 	</script>
 </body>
 </html>
